@@ -2,8 +2,8 @@ const POWER = 100;
 const STATUS = true;
 
 let ENERGY = function () {
-    this.setPower = function (enegry) {
-        this.power = enegry;
+    this.setPower = function () {
+        this.power = POWER;
     }
     this.getPower = function () {
         return this.power;
@@ -45,7 +45,7 @@ let MOBILE = function () {
     }
 
     this.chargeMobile = function () {
-        this.getBatteryInfo++;
+        this.pin.getCharge();
     }
     this.checkStatusMobile = function () {
         if (this.status){
@@ -57,6 +57,7 @@ let MOBILE = function () {
     this.showInbox = function () {
 
         return this.inboxMessage;
+        this.pin.descrasePower();
     }
 
     this.createMessage = function (mess) {
@@ -68,6 +69,7 @@ let MOBILE = function () {
         //return this.newMessage;
 
         this.sentMessage.push(this.newMessage);
+        this.pin.descrasePower();
 
 
     }
@@ -77,6 +79,7 @@ let MOBILE = function () {
         this.inboxMessage.push(mess);
 
         return this.inboxMessage;
+        this.pin.descrasePower();
     }
 
 }
@@ -88,11 +91,15 @@ function init() { //Khoi tao
 
 
 // Iphone Init
+let pinIphone = new ENERGY();
+pinIphone.setPower();
+
 let iphone = new MOBILE();
 iphone.status = STATUS;
-let pinIphone = new ENERGY();
-pinIphone.setPower(POWER);
 iphone.setPower(pinIphone);
+
+
+console.log(iphone.getBatteryInfo());
 
 // Nokia Init
 let nokia = new MOBILE();
@@ -144,7 +151,7 @@ function sendMessenger() {
     iphone.createMessage(new_mess);
     iphone.sendMessage();
     nokia.reviceMessage(new_mess);
-    pinIphone.descrasePower();
+    //pinIphone.descrasePower();
     document.getElementById('display1').value = "";
     document.getElementById('pin_iphone').innerText = iphone.getBatteryInfo();
 
@@ -158,7 +165,7 @@ function checkInBox() {
        show+= mess[i]+"\n";
     }
     document.getElementById('display2').innerHTML = show;
-    pinNokia.descrasePower();
+    //pinNokia.descrasePower();
     document.getElementById('pin_nokia').innerText = nokia.getBatteryInfo();
 }
 
