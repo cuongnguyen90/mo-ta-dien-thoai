@@ -57,7 +57,7 @@
     this.showInbox = function () {
 
         return this.inboxMessage;
-        this.pin.descrasePower();
+
     }
 
     this.createMessage = function (mess) {
@@ -69,7 +69,7 @@
         //return this.newMessage;
 
         this.sentMessage.push(this.newMessage);
-        this.pin.descrasePower();
+
 
 
     }
@@ -79,7 +79,7 @@
         this.inboxMessage.push(mess);
 
         return this.inboxMessage;
-        this.pin.descrasePower();
+
     }
 
     }
@@ -147,26 +147,24 @@
 
     }
     function sendMessenger() {
-    let new_mess = document.getElementById('display1').value;
-    iphone.createMessage(new_mess);
-    iphone.sendMessage();
-    nokia.reviceMessage(new_mess);
-    //pinIphone.descrasePower();
-    document.getElementById('display1').value = "";
-    document.getElementById('pin_iphone').innerText = iphone.getBatteryInfo();
+        let new_mess = document.getElementById('display1').value;
+        iphone.createMessage(new_mess);
+        iphone.sendMessage();
+        nokia.reviceMessage(new_mess);
+        pinIphone.descrasePower();
+        initIphone();
 
     }
 
     function checkInBox() {
-    document.getElementById('display2').innerHTML = "";
-    mess = nokia.showInbox();
-    show = "";
-    for (i = 0;i < mess.length;i++){
-       show+= mess[i]+"\n";
-    }
-    document.getElementById('display2').innerHTML = show;
-    //pinNokia.descrasePower();
-    document.getElementById('pin_nokia').innerText = nokia.getBatteryInfo();
+        pinNokia.descrasePower();
+        initNokia();
+        mess = nokia.showInbox();
+        show = "";
+        for (i = 0;i < mess.length;i++){
+           show+= mess[i]+"\n";
+        }
+        document.getElementById('display2').innerHTML = show;
     }
 
 
