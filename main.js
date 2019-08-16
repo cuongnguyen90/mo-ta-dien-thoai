@@ -1,7 +1,7 @@
-const POWER = 100;
-const STATUS = true;
+    const POWER = 100;
+    const STATUS = true;
 
-let ENERGY = function () {
+    let ENERGY = function () {
     this.setPower = function () {
         this.power = POWER;
     }
@@ -21,9 +21,9 @@ let ENERGY = function () {
             this.power--;
         }
     }
-}
+    }
 
-let MOBILE = function () {
+    let MOBILE = function () {
 
     this.newMessage = undefined;
     this.inboxMessage = new Array();
@@ -82,38 +82,38 @@ let MOBILE = function () {
         this.pin.descrasePower();
     }
 
-}
+    }
 
-function init() { //Khoi tao
+    function init() { //Khoi tao
     initIphone();
     initNokia()
-}
+    }
 
 
-// Iphone Init
-let pinIphone = new ENERGY();
-pinIphone.setPower();
+    // Iphone Init
+    let pinIphone = new ENERGY();
+    pinIphone.setPower();
 
-let iphone = new MOBILE();
-iphone.status = STATUS;
-iphone.setPower(pinIphone);
-
-
-console.log(iphone.getBatteryInfo());
-
-// Nokia Init
-let nokia = new MOBILE();
-nokia.setPower(POWER);
-nokia.status = STATUS;
-let pinNokia = new ENERGY();
-pinNokia.setPower(POWER);
-nokia.setPower(pinNokia);
+    let iphone = new MOBILE();
+    iphone.status = STATUS;
+    iphone.setPower(pinIphone);
 
 
+    //console.log(iphone.getBatteryInfo());
 
-// IPHONE
+    // Nokia Init
+    let pinNokia = new ENERGY();
+    pinNokia.setPower();
 
-function initIphone(){
+    let nokia = new MOBILE();
+    nokia.status = STATUS;
+    nokia.setPower(pinNokia);
+
+
+
+    // IPHONE
+
+    function initIphone(){
 
         document.getElementById('iphone').innerHTML =
             "<div class=\"mobile1\">\n" +
@@ -131,8 +131,8 @@ function initIphone(){
 
 
 
-}
-function switchOnOff() {
+    }
+    function switchOnOff() {
 
     check = document.getElementById('on_off').checked;
 
@@ -145,8 +145,8 @@ function switchOnOff() {
         console.log(iphone.checkStatusMobile());
     }
 
-}
-function sendMessenger() {
+    }
+    function sendMessenger() {
     let new_mess = document.getElementById('display1').value;
     iphone.createMessage(new_mess);
     iphone.sendMessage();
@@ -155,9 +155,9 @@ function sendMessenger() {
     document.getElementById('display1').value = "";
     document.getElementById('pin_iphone').innerText = iphone.getBatteryInfo();
 
-}
+    }
 
-function checkInBox() {
+    function checkInBox() {
     document.getElementById('display2').innerHTML = "";
     mess = nokia.showInbox();
     show = "";
@@ -167,14 +167,14 @@ function checkInBox() {
     document.getElementById('display2').innerHTML = show;
     //pinNokia.descrasePower();
     document.getElementById('pin_nokia').innerText = nokia.getBatteryInfo();
-}
+    }
 
 
 
-//NOKIA
+    //NOKIA
 
 
-function initNokia() {
+    function initNokia() {
 
 
         document.getElementById('nokia').innerHTML =
@@ -190,6 +190,6 @@ function initNokia() {
             "        </label>\n" +
             "    </div>"
 
-}
+    }
 
 
