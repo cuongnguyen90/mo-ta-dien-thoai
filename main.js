@@ -151,6 +151,7 @@ function sendMessenger() {
 }
 
 function checkInBox() {
+    document.getElementById('display2').innerHTML = "";
     mess = nokia.showInbox();
     show = "";
     for (i = 0;i < mess.length;i++){
