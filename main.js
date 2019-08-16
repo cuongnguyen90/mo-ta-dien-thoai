@@ -55,11 +55,8 @@ let MOBILE = function () {
         }
     }
     this.showInbox = function () {
-        mess =""
-        for (i = 0;i <= inboxMessage.length;i++){
-            mess+=inboxMessage[i];
-        }
-        return mess;
+
+        return this.inboxMessage;
     }
 
     this.createMessage = function (mess) {
@@ -68,8 +65,10 @@ let MOBILE = function () {
 
     this.sendMessage = function () {
 
-        return this.newMessage;
+        //return this.newMessage;
+
         this.sentMessage.push(this.newMessage);
+
 
     }
 
@@ -82,21 +81,37 @@ let MOBILE = function () {
 
 }
 
-
-// IPHONE
-function init() {
+function init() { //Khoi tao
     initIphone();
     initNokia()
 }
 
 
+// Iphone Init
+let iphone = new MOBILE();
+iphone.status = STATUS;
+let pinIphone = new ENERGY();
+pinIphone.setPower(POWER);
+iphone.setPower(pinIphone);
+
+// Nokia Init
+let nokia = new MOBILE();
+nokia.setPower(POWER);
+nokia.status = STATUS;
+let pinNokia = new ENERGY();
+pinNokia.setPower(POWER);
+nokia.setPower(pinNokia);
+
+
+
+// IPHONE
+
 function initIphone(){
-        let iphone = new MOBILE();
-        iphone.setPower(POWER);
-        iphone.status = STATUS;
+
         document.getElementById('iphone').innerHTML =
             "<div class=\"mobile1\">\n" +
-            "            <textarea name=\"\" id=\"display1\" cols=\"30\" rows=\"10\"></textarea>\n" +
+            "<p id=\'pin_iphone\'>"+iphone.getBatteryInfo()+"<\/p>" +
+            "<textarea name=\"\" id=\"display1\" cols=\"30\" rows=\"10\"></textarea>\n" +
             "            <input type=\"button\" onclick=\'sendMessenger()\'  value=\"SEND\">\n" +
             "            <input type=\"button\" value=\"CHECK INBOX\">\n" +
             "            <label class=\"switch\">\n" +
@@ -111,41 +126,55 @@ function initIphone(){
 
 }
 function switchOnOff() {
-    let iphone = new MOBILE();
+
     check = document.getElementById('on_off').checked;
 
     if (check){
         iphone.turnOn();
 
-        console.log(iphone.status);
+        console.log(iphone.checkStatusMobile());
     }else{
         iphone.turnOff();
-        console.log(iphone.status);
+        console.log(iphone.checkStatusMobile());
     }
 
 }
 function sendMessenger() {
-    new_mess = document.getElementById('display1').value;
-
+    let new_mess = document.getElementById('display1').value;
+    iphone.createMessage(new_mess);
+    iphone.sendMessage();
+    nokia.reviceMessage(new_mess);
+    pinIphone.descrasePower();
+    document.getElementById('display1').value = "";
+    document.getElementById('pin_iphone').innerText = iphone.getBatteryInfo();
 
 }
 
-
+function checkInBox() {
+    mess = nokia.showInbox();
+    show = "";
+    for (i = 0;i < mess.length;i++){
+       show+= mess[i]+"\n";
+    }
+    document.getElementById('display2').innerHTML = show;
+    pinNokia.descrasePower();
+    document.getElementById('pin_nokia').innerText = nokia.getBatteryInfo();
+}
 
 
 
 //NOKIA
 
+
 function initNokia() {
-        let nokia = new MOBILE();
-        nokia.setPower(POWER);
-        nokia.status = STATUS;
+
 
         document.getElementById('nokia').innerHTML =
             "<div class=\"mobile2\">\n" +
-            "        <textarea name=\"\" id=\"display2\" cols=\"30\" rows=\"10\"></textarea>\n" +
+            "<p id=\'pin_nokia\'>"+nokia.getBatteryInfo()+"<\/p>" +
+            "<textarea name=\"\" id=\"display2\" cols=\"30\" rows=\"10\"></textarea>\n" +
             "        <input type=\"button\" value=\"SEND\">\n" +
-            "        <input type=\"button\" value=\"CHECK INBOX\">\n" +
+            "        <input type=\"button\" onclick=\'checkInBox()\' value=\"CHECK INBOX\">\n" +
             "\n" +
             "        <label class=\"switch\">\n" +
             "            <input type=\"checkbox\" checked>\n" +
